@@ -38,6 +38,8 @@ const displayPhones = (phones, dataLimit) => {
                         <div class="card-body">
                             <h5 class="card-title">${phone.phone_name}</h5>
                             <p class="card-text">${phone.slug}</p>
+                            <button oclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetailModal">Show Details</button>
+                            
                         </div>
         </div>
         `;
@@ -60,8 +62,14 @@ document.getElementById('btn-search').addEventListener('click', function () {
 
     // start speener Loader
     processSearch(10);
+})
 
-    searchField.value = '';
+// search input field enter key handler
+document.getElementById('search-field').addEventListener('keypress', function (e) {
+    // console.log(e.key);
+    if (e.key === 'Enter') {
+        processSearch(10);
+    }
 })
 
 const toggleSpinner = isLoading => {
@@ -76,9 +84,22 @@ const toggleSpinner = isLoading => {
 }
 
 
-// not the best way to show all
+// not the best way to load show all
 document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
 })
 
-// loadPhones();
+const loadPhoneDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    displayPhoneDetails(data.data);
+}
+
+const displayPhoneDetails = phone => {
+    // console.log(phone)
+    const modalTitle = document.getElementById('phoneDetailModalLabel');
+    modalTitle.innerText = phone.name;
+}
+
+loadPhones('apple');
