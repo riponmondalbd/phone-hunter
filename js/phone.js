@@ -109,4 +109,4 @@ const handleShowAll = () => {
   handleSearch(true);
 };
 
-loadPhone("apple");
+// loadPhone("apple");
