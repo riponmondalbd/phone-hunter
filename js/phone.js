@@ -47,14 +47,27 @@ const displayPhones = (phones) => {
     // append card
     phoneContainer.appendChild(phoneCard);
   });
+  // stop loading spinner
+  toggleLoadingSpinner(false);
 };
 
 // handle search button
 const handleSearch = () => {
+  // start spinner
+  toggleLoadingSpinner(true);
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   console.log(searchText);
   loadPhone(searchText);
+};
+
+const toggleLoadingSpinner = (isLoading) => {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  if (isLoading) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
 };
 
 // loadPhone("apple");
